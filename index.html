@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Antje – Van Gogh Galerie | Kunst & Musik</title>
+    <meta name="description" content="Antje – Eine interaktive Van Gogh Galerie mit Videos, Musik, Fotogalerien und Künstler-Porträts. Hommage an Vincent van Gogh.">
+    <meta name="theme-color" content="#faf3e0">
+
+    <meta property="og:title" content="Antje – Van Gogh Galerie">
+    <meta property="og:description" content="Eine interaktive Hommage an Van Gogh mit Videos, Musik und Kunstgalerien.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:image" content="Bilder/BilderGalerie/4fe10e1a562f223da0f45728d238cf40_e9489fa1-c5ee-4de4-810d-d7466bdf01d2.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Antje – Van Gogh Galerie">
+    <meta name="twitter:description" content="Eine interaktive Hommage an Van Gogh mit Videos, Musik und Kunstgalerien.">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Antje – Van Gogh Galerie",
+        "description": "Interaktive Kunstgalerie als Hommage an Vincent van Gogh mit Videos, Musik und Fotogalerien.",
+        "about": { "@type": "Person", "name": "Vincent van Gogh" },
+        "mainEntity": [
+            {"@type": "VideoObject", "name": "BilderGalerie", "contentUrl": "VideosLarge/BilderGalerie.mp4"},
+            {"@type": "VideoObject", "name": "Über sechzig und kein bisschen leise", "contentUrl": "VideosLarge/GeschichteEinerFrau.mp4"}
+        ]
+    }
+    </script>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌻</text></svg>">
+
+    <style>
+        /* ============ CSS VARIABLES (Light Theme Default) ============ */
+        :root {
+            --vg-cream:    #faf3e0;
+            --vg-gold:     #daa520;
+            --vg-gold-lt:  #f7d44a;
+            --vg-gold-dk:  #b97f3a;
+            --vg-ochre:    #b85c1a;
+            --vg-ochre-lt: #d49b3a;
+            --vg-green:    #4a6741;
+            --vg-green-lt: #6b8e5a;
+            --vg-blue:     #3b5998;
+            --vg-blue-lt:  #6a8ecf;
+            --vg-brown:    #5a3c2a;
+            --vg-brown-lt: #8b6b4a;
+            --vg-sky:      #e8dcc8;
+            --vg-dark:     #2a241f;
+            --vg-text:     #2c231f;
+            --vg-text-lt:  #5c3e2b;
+            --bg-page:      var(--vg-cream);
+            --bg-container: rgba(255, 250, 235, 0.88);
+            --text-primary: var(--vg-text);
+            --text-secondary: var(--vg-text-lt);
+            --card-shadow: 12px 12px 20px rgba(0,0,0,0.15);
+            --border-light: #e3bc7a;
+            --transition-speed: 0.3s;
+            --nav-bg: rgba(255,250,235,0.92);
+            --footer-bg: #5a3c2a;
+            --footer-text: #faf3e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-page);
+            font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+            color: var(--text-primary);
+            padding: 2rem 1.5rem;
+            position: relative;
+            transition: background 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* ============ SCROLL PROGRESS BAR ============ */
+        #scrollProgress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--vg-gold), var(--vg-ochre), var(--vg-gold-lt));
+            z-index: 10001;
+            width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* ============ STICKY NAVIGATION ============ */
+        .sticky-nav {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 9000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(218,165,32,0.3);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+            transition: background 0.5s ease, box-shadow 0.3s;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transform: translateY(0);
+        }
+        .sticky-nav a {
+            text-decoration: none;
+            color: var(--vg-text);
+            font-family: 'Georgia', serif;
+            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            position: relative;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: linear-gradient(135deg, var(--vg-gold-lt), var(--vg-ochre));
+            color: var(--vg-dark);
+            font-weight: bold;
+        }
+
+        /* ============ BACK TO TOP BUTTON ============ */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            z-index: 10002;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--vg-gold), var(--vg-ochre));
+            border: 2px solid var(--vg-gold-dk);
+            color: var(--vg-text);
+            font-size: 1.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.3s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            line-height: 1;
+            padding: 0;
+        }
+        #backToTop.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        #backToTop:hover {
+            background: linear-gradient(135deg, var(--vg-gold-lt), var(--vg-gold));
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(218,165,32,0.3);
+        }
+        #backToTop:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        /* ============ STARDUST CANVAS ============ */
+        #stardustCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============ CURSOR SPARKLE ============ */
+        .cursor-sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--vg-gold-lt), var(--vg-gold), transparent);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            transition: opacity 0.15s, transform 0.15s;
+            mix-blend-mode: screen;
+            filter: blur(1px);
+        }
+        .cursor-sparkle.active {
+            opacity: 0.7;
+            transform: translate(-50%, -50%) scale(1);
+            animation: sparkleBurst 0.6s ease-out forwards;
+        }
+        @keyframes sparkleBurst {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+        }
+
+        /* ============ CONFETTI CONTAINER ============ */
+        #confettiContainer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 10000;
+            overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute;
+            top: -60px;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg) scale(0.3); opacity: 0; }
+        }
+
+        /* ============ FIXED BACKGROUND EFFECTS ============ */
+        .vg-bg-elements {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .sunflower {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--vg-gold-lt), var(--vg-gold), var(--vg-ochre));
+            opacity: 0.07;
+            animation: sunflowerDrift 25s ease-in-out infinite;
+            filter: blur(8px);
+        }
+        .sunflower:nth-child(1) { width: 50px; height: 50px; top: 8%; left: 6%; }
+        .sunflower:nth-child(2) { width: 35px; height: 35px; top: 55%; right: 10%; animation-delay: -8s; }
+        .sunflower:nth-child(3) { width: 60px; height: 60px; bottom: 12%; left: 55%; animation-delay: -16s; }
+        .sunflower:nth-child(4) { width: 30px; height: 30px; top: 75%; left: 12%; animation-delay: -4s; }
+        .sunflower:nth-child(5) { width: 45px; height: 45px; top: 30%; right: 25%; animation-delay: -12s; }
+        .sunflower:nth-child(6) { width: 70px; height: 70px; top: 20%; left: 75%; animation-delay: -18s; opacity: 0.04; }
+        .sunflower:nth-child(7) { width: 40px; height: 40px; top: 85%; right: 40%; animation-delay: -3s; opacity: 0.05; }
+
+        .brushstroke-dot {
+            position: absolute;
+            width: 6px; height: 6px;
+            background: var(--vg-ochre-lt);
+            opacity: 0.06;
+            border-radius: 50%;
+            animation: dotPulse 6s ease-in-out infinite;
+        }
+        .brushstroke-dot:nth-child(8)  { top: 18%; left: 40%; }
+        .brushstroke-dot:nth-child(9)  { top: 65%; left: 35%; animation-delay: -1.5s; width: 5px; height: 5px; }
+        .brushstroke-dot:nth-child(10) { top: 45%; right: 15%; animation-delay: -3s; width: 8px; height: 8px; }
+        .brushstroke-dot:nth-child(11) { bottom: 35%; left: 48%; animation-delay: -4.5s; }
+        .brushstroke-dot:nth-child(12) { top: 10%; right: 50%; animation-delay: -2s; width: 4px; height: 4px; }
+        .brushstroke-dot:nth-child(13) { top: 50%; left: 70%; animation-delay: -5s; width: 7px; height: 7px; opacity: 0.08; }
+        .brushstroke-dot:nth-child(14) { bottom: 20%; right: 60%; animation-delay: -3.5s; width: 5px; height: 5px; }
+
+        @keyframes sunflowerDrift {
+            0%, 100% { transform: translateY(0) rotate(0deg); border-radius: 50% 50% 50% 50%; }
+            25% { transform: translateY(-18px) rotate(8deg); border-radius: 40% 60% 55% 45%; }
+            50% { transform: translateY(-8px) rotate(-5deg); border-radius: 58% 42% 42% 58%; }
+            75% { transform: translateY(-14px) rotate(6deg); border-radius: 45% 55% 48% 52%; }
+        }
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.04; transform: scale(1); }
+            50% { opacity: 0.12; transform: scale(2.2); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            #stardustCanvas, .cursor-sparkle, #confettiContainer, .paint-particle { display: none !important; }
+        }
+
+        /* ============ MAIN CONTAINER ============ */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            background: var(--bg-container);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 3rem;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.12),
+                inset 0 1px 2px rgba(255,245,200,0.7),
+                0 0 80px rgba(218,165,32,0.04);
+            border: 1px solid rgba(218,165,32,0.25);
+            transition: background 0.5s ease, box-shadow 0.5s;
+            animation: containerEntrance 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+        @keyframes containerEntrance {
+            0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ============ HEADER ============ */
+        .vg-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .vg-title-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        .vg-title {
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--vg-ochre);
+            font-family: 'Georgia', serif;
+            letter-spacing: 4px;
+            display: inline-block;
+            position: relative;
+            animation: titleGlow 3s ease-in-out infinite;
+            background: linear-gradient(135deg, var(--vg-ochre), var(--vg-gold), var(--vg-ochre-lt), var(--vg-ochre));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(2px 2px 0px var(--vg-gold-lt));
+        }
+        @keyframes titleGlow {
+            0%, 100% { background-position: 0% 50%; filter: drop-shadow(2px 2px 0px var(--vg-gold-lt)); }
+            50% { background-position: 100% 50%; filter: drop-shadow(4px 4px 0px var(--vg-gold)) drop-shadow(0 0 15px rgba(218,165,32,0.3)); }
+        }
+
+        .vg-title::before {
+            content: "🌻";
+            position: absolute;
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: sunflowerSpin 6s ease-in-out infinite;
+            -webkit-text-fill-color: initial;
+        }
+        .vg-title::after {
+            content: "🌻";
+            position: absolute;
+            right: -60px;
+            top: 0;
+            font-size: 1.5rem;
+            animation: sunflowerSpin 8s ease-in-out infinite reverse;
+            -webkit-text-fill-color: initial;
+        }
+        @keyframes sunflowerSpin {
+            0%, 100% { transform: translateY(-50%) rotate(0deg) scale(1); }
+            50% { transform: translateY(-50%) rotate(30deg) scale(1.2); }
+        }
+
+        .vg-subhead {
+            text-align: center;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-top: 0.8rem;
+            font-size: 1.2rem;
+            border-left: 4px solid var(--vg-ochre);
+            border-right: 4px solid var(--vg-ochre);
+            padding: 0.5rem 1.5rem;
+            display: inline-block;
+            letter-spacing: 1px;
+            animation: subtitleReveal 1.5s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        @keyframes subtitleReveal {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .vg-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--vg-gold);
+            opacity: 0.4;
+            font-size: 1.3rem;
+            letter-spacing: 15px;
+            animation: dividerShimmer 3s ease-in-out infinite;
+        }
+        @keyframes dividerShimmer {
+            0%, 100% { opacity: 0.35; }
+            50% { opacity: 0.6; }
+        }
+
+        /* ============ SECTIONS - SCROLL REVEAL ============ */
+        .section { margin-bottom: 3rem; }
+
+        .section.reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .section.reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============ SECTION HEADERS ============ */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+            border-left: 8px solid var(--vg-gold);
+            padding-left: 1rem;
+            position: relative;
+            transition: border-color 0.5s;
+        }
+        .section-header:hover {
+            border-left-color: var(--vg-ochre);
+        }
+        .section-header::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--vg-gold), var(--vg-ochre), transparent);
+            transition: width 0.8s ease;
+        }
+        .section-header:hover::after {
+            width: 60%;
+        }
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: var(--vg-green);
+            background: linear-gradient(135deg, rgba(218,165,32,0.12), transparent);
+            padding: 0.3rem 1rem 0.3rem 0;
+            letter-spacing: 1px;
+            transition: color 0.4s;
+        }
+
+        /* ============ VIDEO BLOCKS ============ */
+        .video-block {
+            background: var(--vg-dark);
+            border-radius: 2rem;
+            padding: 0.6rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+        .video-block::before {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(218,165,32,0.06), transparent, rgba(218,165,32,0.06), transparent);
+            animation: videoBlockShine 8s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        @keyframes videoBlockShine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .video-block:hover {
+            transform: translateY(-8px) scale(1.008);
+            box-shadow: var(--card-shadow), 0 0 40px rgba(218,165,32,0.15), 0 0 80px rgba(218,165,32,0.05);
+            border-color: var(--vg-gold);
+        }
+        .video-block > * { position: relative; z-index: 1; }
+
+        .video-title {
+            background: linear-gradient(135deg, var(--vg-gold-lt), var(--vg-ochre));
+            color: var(--vg-text);
+            padding: 0.5rem 1.2rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 0.7rem;
+            font-family: 'Georgia', serif;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: videoTitlePulse 2.5s ease-in-out infinite;
+        }
+        @keyframes videoTitlePulse {
+            0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+            50% { box-shadow: 0 4px 20px rgba(218,165,32,0.35), 0 0 25px rgba(218,165,32,0.1); }
+        }
+
+        img, video {
+            max-width: 100%;
+            height: auto;
+        }
+        video {
+            width: 100%;
+            border-radius: 1.5rem;
+            background: black;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: box-shadow 0.4s;
+        }
+        .video-block:hover video {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 25px rgba(218,165,32,0.08);
+        }
+
+        /* ============ AUDIO SECTION ============ */
+        .audio-vg {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .audio-vg-item {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(218,165,32,0.08);
+            padding: 1rem 1.5rem 0.8rem;
+            border-radius: 60px;
+            border-left: 10px solid var(--vg-gold);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .audio-vg-item::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(218,165,32,0.03), transparent, rgba(218,165,32,0.03));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .audio-vg-item:hover::before { opacity: 1; }
+        .audio-vg-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        .audio-vg-item:nth-child(2) { border-left-color: var(--vg-ochre); }
+        .audio-vg-label {
+            font-weight: bold;
+            color: var(--vg-ochre);
+            font-size: 1.1rem;
+            font-style: italic;
+            display: block;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        .audio-vg-item audio { width: 100%; border-radius: 30px; position: relative; }
+
+        /* ============ AUDIO VISUALIZER BARS ============ */
+        .audio-visualizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 30px;
+            margin-top: 8px;
+            opacity: 0.4;
+            transition: opacity 0.5s;
+        }
+        .audio-visualizer:hover { opacity: 0.8; }
+        .audio-bar {
+            flex: 1;
+            min-width: 3px;
+            background: linear-gradient(to top, var(--vg-ochre), var(--vg-gold-lt));
+            border-radius: 3px 3px 0 0;
+            animation: audioBarDance 1.2s ease-in-out infinite;
+        }
+        @keyframes audioBarDance {
+            0%, 100% { height: 4px; }
+            50% { height: 28px; }
+        }
+
+        /* ============ LYRIC BUTTONS & PANELS ============ */
+        .lyric-btn {
+            background: transparent;
+            border: 2px dashed var(--vg-gold);
+            color: var(--vg-ochre);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 0.85rem;
+            font-style: italic;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.4s;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .lyric-btn::before {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(218,165,32,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .lyric-btn:hover::before {
+            width: 300px; height: 300px;
+        }
+        .lyric-btn:hover {
+            background: rgba(218,165,32,0.12);
+            border-style: solid;
+            color: var(--vg-text);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(218,165,32,0.1);
+        }
+        .lyric-btn:focus-visible {
+            outline: 2px solid var(--vg-gold-dk);
+            outline-offset: 2px;
+        }
+
+        .lyric-panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, opacity 0.5s ease, margin 0.4s ease, padding 0.4s ease;
+            margin: 0;
+            padding: 0 1.5rem;
+            background: rgba(245,235,200,0.5);
+            border-left: 6px solid var(--vg-gold);
+            border-radius: 0 40px 40px 0;
+            font-family: 'Segoe Script', 'Comic Sans MS', 'Georgia', cursive, serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--vg-text);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .lyric-panel.open {
+            max-height: 2000px;
+            opacity: 1;
+            margin: 0.8rem 0 1rem;
+            padding: 1.2rem 1.5rem;
+            animation: lyricUnfold 0.5s ease-out;
+        }
+        @keyframes lyricUnfold {
+            0% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* ============ BUTTONS ============ */
+        .vg-button {
+            background: linear-gradient(135deg, var(--vg-gold), var(--vg-ochre));
+            border: 2px solid var(--vg-gold-dk);
+            color: var(--vg-text);
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+            padding: 0.9rem 1.5rem;
+            margin: 1rem 0 0.8rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+            text-align: center;
+            letter-spacing: 1px;
+            box-shadow: 8px 8px 0 var(--vg-gold-dk);
+            display: inline-block;
+            width: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .vg-button::after {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,200,0.2) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .vg-button::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+        .vg-button:hover {
+            background: linear-gradient(135deg, var(--vg-gold-lt), var(--vg-gold));
+            transform: translateY(-5px);
+            box-shadow: 12px 12px 0 var(--vg-gold-dk), 0 0 30px rgba(218,165,32,0.2);
+        }
+        .vg-button:hover::after { opacity: 1; }
+        .vg-button:hover::before { left: 100%; }
+        .vg-button:active {
+            transform: translateY(3px);
+            box-shadow: 4px 4px 0 var(--vg-gold-dk);
+        }
+        .vg-button:focus-visible {
+            outline: 3px solid var(--vg-gold-dk);
+            outline-offset: 3px;
+        }
+        .vg-button .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            transform: scale(0);
+            animation: rippleEffect 0.7s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes rippleEffect {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* ============ GALLERY GRIDS ============ */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.8rem;
+            background: rgba(245,235,200,0.4);
+            padding: 1.2rem;
+            border-radius: 36px;
+            border: 1px dashed var(--vg-gold);
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-grid::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(218,165,32,0.04), transparent);
+            pointer-events: none;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: visible;
+        }
+        .gallery-item img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 1.5rem;
+            box-shadow: 8px 8px 18px rgba(0,0,0,0.25);
+            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            border: 2px solid var(--border-light);
+            cursor: pointer;
+            display: block;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.06) rotate(-0.8deg);
+            border-color: var(--vg-gold-dk);
+            box-shadow: 14px 14px 32px rgba(0,0,0,0.35), 0 0 20px rgba(218,165,32,0.18);
+            z-index: 10;
+        }
+        .gallery-item img:focus-visible {
+            outline: 3px solid var(--vg-gold-dk);
+            outline-offset: 3px;
+        }
+        .gallery-caption {
+            display: block;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--vg-text);
+            margin-top: 0.4rem;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            opacity: 0.75;
+        }
+        .gallery-grid img.reveal-img {
+            opacity: 0;
+            transform: scale(0.85) translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .gallery-grid img.reveal-img.visible-img {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* ============ SHORT VIDEO GRID ============ */
+        .short-video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .short-video-card {
+            background: var(--vg-dark);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 12px 18px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            border: 1px solid var(--border-light);
+            position: relative;
+            cursor: pointer;
+        }
+        .short-video-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 22px 40px rgba(0,0,0,0.4), 0 0 25px rgba(218,165,32,0.12);
+            border-color: var(--vg-gold);
+        }
+        .short-video-card video {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+        .short-video-card::after {
+            content: "▶";
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.6rem;
+            color: rgba(218,165,32,0.85);
+            text-shadow: 0 0 25px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.5);
+            pointer-events: none;
+            opacity: 0.8;
+            transition: all 0.35s;
+            line-height: 1;
+            animation: playButtonPulse 2s ease-in-out infinite;
+        }
+        @keyframes playButtonPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.75; }
+            50% { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+        }
+        .short-video-card:hover::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.4);
+            color: var(--vg-gold-lt);
+        }
+        .short-label {
+            background: linear-gradient(135deg, var(--vg-gold-lt), var(--vg-ochre));
+            color: var(--vg-text);
+            text-align: center;
+            font-weight: bold;
+            padding: 7px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: all 0.4s;
+        }
+        .short-video-card:hover .short-label {
+            background: linear-gradient(135deg, var(--vg-gold-lt), var(--vg-gold));
+            letter-spacing: 2px;
+        }
+        .short-video-card.reveal-vid {
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .short-video-card.reveal-vid.visible-vid {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* ============ GALLERY TOGGLE ANIMATIONS ============ */
+        .gallery-grid, .short-video-grid {
+            transition: max-height 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s ease, margin 0.5s ease;
+            overflow: hidden;
+        }
+        .hidden-gallery {
+            max-height: 0 !important;
+            opacity: 0 !important;
+            overflow: hidden !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            border-width: 0 !important;
+            pointer-events: none !important;
+        }
+        .gallery-grid:not(.hidden-gallery), .short-video-grid:not(.hidden-gallery) {
+            max-height: 20000px;
+            opacity: 1;
+        }
+
+        .gallery-count { font-size: 0.8em; opacity: 0.8; }
+        .gallery-hint {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            color: var(--vg-text-lt);
+            font-style: italic;
+        }
+
+        /* ============ MODAL ============ */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9500;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.92);
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            animation: modalFadeIn 0.35s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            touch-action: pan-y;
+        }
+        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-content {
+            max-width: 85vw;
+            max-height: 85vh;
+            border-radius: 2rem;
+            border: 6px solid var(--vg-gold-lt);
+            box-shadow: 0 0 60px rgba(218,165,32,0.3), 0 0 120px rgba(0,0,0,0.6);
+            animation: modalZoomIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        @keyframes modalZoomIn {
+            from { transform: scale(0.5) rotate(-3deg); opacity: 0; }
+            to { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 35px;
+            font-size: 50px;
+            color: var(--vg-gold-lt);
+            font-weight: bold;
+            transition: 0.25s;
+            cursor: pointer;
+            z-index: 9501;
+            background: transparent;
+            border: none;
+            padding: 0 10px;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(218,165,32,0.4);
+        }
+        .close-modal:hover, .close-modal:focus-visible {
+            color: #fff;
+            transform: scale(1.3) rotate(15deg);
+            text-shadow: 0 0 40px rgba(218,165,32,0.8);
+        }
+
+        .modal-video {
+            display: none;
+            cursor: default;
+            max-width: 85vw;
+            max-height: 85vh;
+            border-radius: 2rem;
+            border: 6px solid var(--vg-gold-lt);
+            box-shadow: 0 0 60px rgba(218,165,32,0.3);
+            animation: modalZoomIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9501;
+            background: linear-gradient(135deg, rgba(218,165,32,0.75), rgba(184,92,26,0.75));
+            border: 2px solid var(--vg-gold);
+            color: var(--vg-text);
+            font-size: 2.2rem;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+        }
+        .modal-nav:hover {
+            background: linear-gradient(135deg, var(--vg-gold-lt), var(--vg-gold));
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 0 35px rgba(218,165,32,0.4);
+        }
+        .modal-prev { left: 25px; }
+        .modal-next { right: 25px; }
+
+        .modal-counter {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9501;
+            background: rgba(42,36,31,0.9);
+            color: var(--vg-gold-lt);
+            font-size: 1rem;
+            padding: 0.5rem 1.4rem;
+            border-radius: 30px;
+            font-family: 'Georgia', serif;
+            border: 1px solid var(--vg-gold);
+            pointer-events: none;
+            backdrop-filter: blur(8px);
+        }
+
+        /* ============ SKIP LINK ============ */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            z-index: 9999;
+            background: var(--vg-gold);
+            color: var(--vg-text);
+            padding: 0.8rem 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+            transition: top 0.3s;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* ============ SCROLLBAR ============ */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-page); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--vg-gold), var(--vg-ochre));
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--vg-gold-lt); }
+
+        /* ============ FOOTER ============ */
+        .container > footer:first-of-type {
+            text-align: center;
+            margin-top: 3.5rem;
+            padding-top: 1.5rem;
+            font-size: 0.85rem;
+            border-top: 2px solid var(--border-light);
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+        }
+        .footer-sunflower {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.3s;
+            user-select: none;
+        }
+        .footer-sunflower:hover {
+            transform: scale(1.4) rotate(15deg);
+            animation: sunflowerSpin 0.6s ease-in-out;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            body { padding: 4.5rem 0.5rem 1rem; }
+            .sticky-nav { padding: 0.4rem 0.5rem; gap: 0.15rem; }
+            .sticky-nav a { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+        }
+
+        @media (max-width: 680px) {
+            body { padding: 5rem 0.5rem 1rem; }
+            .container { padding: 1.2rem; border-radius: 1.5rem; }
+            .vg-title { font-size: 1.9rem; letter-spacing: 2px; }
+            .vg-title::before { left: -35px; font-size: 1.2rem; }
+            .vg-title::after { right: -30px; font-size: 1rem; }
+            .vg-subhead { font-size: 1rem; }
+            .vg-button { font-size: 1rem; padding: 0.7rem 1rem; width: 100%; }
+            .section-header h2 { font-size: 1.3rem; }
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem; padding: 0.8rem; }
+            .short-video-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.8rem; }
+            .modal-content, .modal-video { max-width: 92vw; max-height: 70vh; }
+            .close-modal { top: 10px; right: 15px; font-size: 35px; }
+            .audio-vg-item { min-width: 100%; border-radius: 30px; }
+            .modal-nav { width: 44px; height: 44px; font-size: 1.5rem; }
+            .modal-prev { left: 10px; }
+            .modal-next { right: 10px; }
+            .modal-counter { font-size: 0.8rem; padding: 0.3rem 0.8rem; bottom: 15px; }
+        }
+
+        @media (max-width: 400px) {
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.5rem; padding: 0.5rem; }
+            .short-video-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SCROLL PROGRESS BAR -->
+    <div id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- STARDUST CANVAS -->
+    <canvas id="stardustCanvas" aria-hidden="true"></canvas>
+
+    <!-- CURSOR SPARKLE TRAIL -->
+    <div class="cursor-sparkle" id="cursorSparkle" aria-hidden="true"></div>
+
+    <!-- CONFETTI CONTAINER -->
+    <div id="confettiContainer" aria-hidden="true"></div>
+
+    <!-- BACKGROUND ELEMENTS -->
+    <div class="vg-bg-elements" aria-hidden="true">
+        <div class="sunflower"></div>
+        <div class="sunflower"></div>
+        <div class="sunflower"></div>
+        <div class="sunflower"></div>
+        <div class="sunflower"></div>
+        <div class="sunflower"></div>
+        <div class="sunflower"></div>
+        <div class="brushstroke-dot"></div>
+        <div class="brushstroke-dot"></div>
+        <div class="brushstroke-dot"></div>
+        <div class="brushstroke-dot"></div>
+        <div class="brushstroke-dot"></div>
+        <div class="brushstroke-dot"></div>
+        <div class="brushstroke-dot"></div>
+    </div>
+
+    <!-- BACK TO TOP -->
+    <button id="backToTop" aria-label="Zurück nach oben" title="Nach oben">↑</button>
+
+    <!-- STICKY NAVIGATION -->
+    <nav class="sticky-nav" aria-label="Schnellnavigation">
+        <a href="#section-videos" data-nav="videos">🎬 Videos</a>
+        <a href="#section-musik" data-nav="musik">🎵 Musik</a>
+        <a href="#section-galerie1" data-nav="galerie1">🖼️ Galerie 1</a>
+        <a href="#section-galerie2" data-nav="galerie2">📸 Galerie 2</a>
+        <a href="#section-kuenstler" data-nav="kuenstler">🎥 Künstler</a>
+    </nav>
+
+    <a href="#main-content" class="skip-link" tabindex="1">Zum Inhalt springen</a>
+
+    <div class="container" id="main-content">
+        <div class="vg-header">
+            <div class="vg-title-wrapper">
+                <h1 class="vg-title">✨ Antje ✨</h1>
+            </div>
+            <div class="vg-subhead">„Ich träume meine Malerei und dann male ich meinen Traum" – V. van Gogh</div>
+        </div>
+
+        <div class="vg-divider" aria-hidden="true">✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</div>
+
+        <!-- VIDEO 1 -->
+        <section class="section reveal" aria-labelledby="section-video1-title" id="section-videos">
+            <div class="section-header">
+                <h2 id="section-video1-title">🌻 Antje, hey – du malst uns die Welt</h2>
+            </div>
+            <div class="video-block">
+                <div class="video-title">🎬 Video · Antje, hey – du malst uns die Welt</div>
+                <video controls preload="metadata" playsinline>
+                    <source src="VideosLarge/BilderGalerie.mp4" type="video/mp4">
+                    Ihr Browser unterstützt kein MP4-Video.
+                </video>
+            </div>
+        </section>
+
+        <!-- VIDEO 2 -->
+        <section class="section reveal" aria-labelledby="section-video2-title">
+            <div class="section-header">
+                <h2 id="section-video2-title">📖 Über sechzig und kein bisschen leise · Fotogeschichte</h2>
+            </div>
+            <div class="video-block">
+                <div class="video-title">🎬 Video · Über sechzig und kein bisschen leise</div>
+                <video controls preload="metadata" playsinline>
+                    <source src="VideosLarge/GeschichteEinerFrau.mp4" type="video/mp4">
+                    Ihr Browser unterstützt kein MP4-Video.
+                </video>
+            </div>
+        </section>
+
+        <!-- MP3 AUDIO -->
+        <div class="audio-vg" id="section-musik">
+            <div class="audio-vg-item reveal">
+                <span class="audio-vg-label">🎵 Antje, hey – du malst uns die Welt · MP3</span>
+                <audio controls preload="metadata" id="audioSong2">
+                    <source src="Musik/Antje_Lied2.mp3" type="audio/mpeg">
+                    Ihr Browser kann keine MP3-Datei abspielen.
+                </audio>
+                <div class="audio-visualizer" aria-hidden="true">
+                    <div class="audio-bar" style="animation-delay:0s"></div><div class="audio-bar" style="animation-delay:0.1s"></div><div class="audio-bar" style="animation-delay:0.2s"></div><div class="audio-bar" style="animation-delay:0.3s"></div><div class="audio-bar" style="animation-delay:0.4s"></div><div class="audio-bar" style="animation-delay:0.5s"></div><div class="audio-bar" style="animation-delay:0.15s"></div><div class="audio-bar" style="animation-delay:0.25s"></div><div class="audio-bar" style="animation-delay:0.35s"></div><div class="audio-bar" style="animation-delay:0.45s"></div><div class="audio-bar" style="animation-delay:0.05s"></div><div class="audio-bar" style="animation-delay:0.55s"></div>
+                </div>
+                <button class="lyric-btn" data-lyric="song2" aria-expanded="false">📝 Text anzeigen</button>
+                <div class="lyric-panel" id="lyric-song2">Ein Pinselstrich, Baby – zack, alles wach,
+wo eben noch Grau war, wird plötzlich Krach.
+Du siehst, was wir längst schon verdrängt ham,
+machst Licht an in Ecken, wo wir uns versteckt ham.
+Ganz leise, wie'n alter Song aus der Jukebox,
+kommt dein Traum rein, macht die Herzen wieder groß.
+Du pinselst uns 'ne neue Story an die Wand,
+gibst uns zurück, was uns irgendwann verschwand.
+
+Durch deine Bilder sehen wir klar,
+das, was mal weg war, ist wieder da.
+
+Antje, hey – du malst uns die Welt,
+so wie sie uns im Innersten gefällt.
+Zwischen Schatten, Licht und Zeit
+zeigst du uns: Wir sind soweit.
+Jeder Strich'n kleines Stück von uns,
+jeder Moment – wild und bunt.
+Machst unser Leben wieder weit,
+mit deinen Farben durch die Zeit.
+
+In deinen Farben steckt 'ne Seele drin,
+so tief, dass ich fast sprachlos bin.
+Jede Linie sagt: „Ey, fühl doch mal",
+zeigt den Unterschied zwischen echt und egal.
+Du fängst diese kleinen Sekunden ein,
+die sonst einfach so verschwunden sein'n.
+Und plötzlich checken wir ganz genau,
+was wir überseh'n – jeden Tag, Schritt für Schritt, genau.
+
+Und wir fühlen, was uns fehlt,
+weil dein Blick die Wahrheit wählt.
+
+Antje, hey – du malst uns die Welt,
+so wie sie uns im Innersten gefällt.
+Zwischen Schatten, Licht und Zeit
+zeigst du uns: Wir sind soweit.
+Jeder Strich'n kleines Stück von uns,
+jeder Moment – wild und bunt.
+Machst unser Leben wieder weit,
+mit deinen Farben durch die Zeit.
+
+Und wenn's draußen still wird – kein Ton, kein Licht,
+bleibt dein Bild da und sagt uns: „Vergiss dich nicht."
+Denn in jedem von uns brennt noch 'n kleiner Funke,
+und du machst daraus wieder 'ne leuchtende Bunte.
+
+Antje, hey – du malst uns die Welt,
+die uns wieder zusammenhält.
+Zwischen Chaos, Angst und Blick
+bringst du uns zu uns zurück.
+Jeder Farbton, jeder Move
+holt uns tiefer in den Groove.
+Zu dem, was im Leben zählt –
+Danke, dass du unsre Welt erhellst.</div>
+            </div>
+            <div class="audio-vg-item reveal">
+                <span class="audio-vg-label">🎶 Über sechzig und kein bisschen leise · MP3</span>
+                <audio controls preload="metadata" id="audioSong1">
+                    <source src="Musik/GeschichteEinerFrau.mp3" type="audio/mpeg">
+                    Ihr Browser kann keine MP3-Datei abspielen.
+                </audio>
+                <div class="audio-visualizer" aria-hidden="true">
+                    <div class="audio-bar" style="animation-delay:0s"></div><div class="audio-bar" style="animation-delay:0.12s"></div><div class="audio-bar" style="animation-delay:0.24s"></div><div class="audio-bar" style="animation-delay:0.36s"></div><div class="audio-bar" style="animation-delay:0.48s"></div><div class="audio-bar" style="animation-delay:0.06s"></div><div class="audio-bar" style="animation-delay:0.18s"></div><div class="audio-bar" style="animation-delay:0.3s"></div><div class="audio-bar" style="animation-delay:0.42s"></div><div class="audio-bar" style="animation-delay:0.54s"></div><div class="audio-bar" style="animation-delay:0.08s"></div><div class="audio-bar" style="animation-delay:0.5s"></div>
+                </div>
+                <button class="lyric-btn" data-lyric="song1" aria-expanded="false">📝 Text anzeigen</button>
+                <div class="lyric-panel" id="lyric-song1">Ey, hör mal zu...
+
+Die Jahre ziehn vorbei wie die Elbe an den Kaimauern,
+Doch bei einer Frau, da gibt es absolut kein Bedauern.
+Über sechzig Lenz auf dem Tacho, na und?
+Antje, mein Schatz, du machst das Leben erst bunt.
+Andere gehn in Rente und füttern die Tauben,
+Du rockst die Nacht, man kann es kaum glauben.
+
+Graue Haare? Scheißegal, das ist pures Platin!
+Du brauchst keinen Filter und kein Botox-Benzin.
+Mit deinem Blick machst du die Jungs noch nervös,
+Ein bisschen lässig, ein bisschen familiär-seriös.
+Du bist die Königin vom Altonaer Strand,
+Das absolute Wunder im ganzen Land.
+
+Oh Antje, du Granate, du wilder Diamant,
+Hast das Leben und die Liebe voll in der Hand!
+Über sechzig und kein bisschen leise,
+Auf deine ganz besondere, magische Weise.
+Antje, mein Panik-Mädchen, bleib genau wie du bist,
+Weil die Welt ohne dich nur halb so Knille ist.
+
+Die Falten im Gesicht erzählen geile Geschichten,
+Von durchzechten Nächten und von großen Gedichten.
+Du nimmst dir den Luxus, nur noch das zu tun, was gefällt,
+Du bist der hellste Stern am Firmament dieser Welt.
+Trinkst den Eierlikör aus dem großen Pokal,
+Was die Anderen denken, ist dir völlig egal.
+
+Oh Antje, du Granate, du wilder Diamant,
+Hast das Leben und die Liebe voll in der Hand!
+Über sechzig und kein bisschen leise,
+Auf deine ganz besondere, magische Weise.
+Antje, mein Panik-Mädchen, bleib genau wie du bist,
+Weil die Welt ohne dich nur halb so Knille ist.
+
+Ja, Antje... sechzig ist doch erst der Anfang, Schatz.
+Die Nacht ist jung.
+Zieh die Lederjacke an.
+Wir rocken das Ding.</div>
+            </div>
+        </div>
+
+        <div class="vg-divider" aria-hidden="true">✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</div>
+
+        <!-- GALERIE 1: Bilder -->
+        <section class="section reveal" aria-labelledby="btnGallery1" id="section-galerie1">
+            <button class="vg-button" id="btnGallery1" aria-expanded="false" aria-controls="vgPhotos1" data-gallery="vgPhotos1">
+                🖼️ Fotogalerie · Antje, hey – du malst uns die Welt <span class="gallery-count">(20)</span>
+            </button>
+            <div id="vgPhotos1" class="gallery-grid hidden-gallery" role="region" aria-label="Van Gogh Fotogalerie">
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Albrecht_Duerer.jpg" alt="Albrecht Dürer" loading="lazy"><span class="gallery-caption">Albrecht Dürer</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Andy_Warhol.jpg" alt="Andy Warhol" loading="lazy"><span class="gallery-caption">Andy Warhol</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Artemisia_Gentileschi.jpg" alt="Artemisia Gentileschi" loading="lazy"><span class="gallery-caption">Artemisia Gentileschi</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Claude_Monet.jpg" alt="Claude Monet" loading="lazy"><span class="gallery-caption">Claude Monet</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Edvard_Munch.jpg" alt="Edvard Munch" loading="lazy"><span class="gallery-caption">Edvard Munch</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Egon_Schiele.jpg" alt="Egon Schiele" loading="lazy"><span class="gallery-caption">Egon Schiele</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Frida_Kahlo.jpg" alt="Frida Kahlo" loading="lazy"><span class="gallery-caption">Frida Kahlo</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Gustav_Klimt.jpg" alt="Gustav Klimt" loading="lazy"><span class="gallery-caption">Gustav Klimt</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Henri_Matisse.jpg" alt="Henri Matisse" loading="lazy"><span class="gallery-caption">Henri Matisse</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Kaethe_Kollwitz.jpg" alt="Käthe Kollwitz" loading="lazy"><span class="gallery-caption">Käthe Kollwitz</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Leonardo_da_Vinci.jpg" alt="Leonardo da Vinci" loading="lazy"><span class="gallery-caption">Leonardo da Vinci</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Lucian_Freud.jpg" alt="Lucian Freud" loading="lazy"><span class="gallery-caption">Lucian Freud</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Marc_Chagall.jpg" alt="Marc Chagall" loading="lazy"><span class="gallery-caption">Marc Chagall</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Max_Beckmann.jpg" alt="Max Beckmann" loading="lazy"><span class="gallery-caption">Max Beckmann</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Pablo_Picasso.jpg" alt="Pablo Picasso" loading="lazy"><span class="gallery-caption">Pablo Picasso</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Rembrandt_van_Rijn.jpg" alt="Rembrandt van Rijn" loading="lazy"><span class="gallery-caption">Rembrandt van Rijn</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Salvador_Dali.jpg" alt="Salvador Dalí" loading="lazy"><span class="gallery-caption">Salvador Dalí</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Tamara_de_Lempicka.jpg" alt="Tamara de Lempicka" loading="lazy"><span class="gallery-caption">Tamara de Lempicka</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Vincent_van_Gogh.jpg" alt="Vincent van Gogh" loading="lazy"><span class="gallery-caption">Vincent van Gogh</span></div>
+                <div class="gallery-item"><img src="Bilder/BilderGalerie/Paula_Modersohn-Becker.jpg" alt="Paula Modersohn-Becker" loading="lazy"><span class="gallery-caption">Paula Modersohn-Becker</span></div>
+            </div>
+        </section>
+
+        <!-- GALERIE 2: Über sechzig und kein bisschen leise -->
+        <section class="section reveal" aria-labelledby="btnGallery2" id="section-galerie2">
+            <button class="vg-button" id="btnGallery2" aria-expanded="false" aria-controls="vgPhotos2" data-gallery="vgPhotos2">
+                📸 Fotogalerie · Über sechzig und kein bisschen leise <span class="gallery-count">(48)</span>
+            </button>
+            <div id="vgPhotos2" class="gallery-grid hidden-gallery" role="region" aria-label="Über sechzig und kein bisschen leise Galerie">
+                <img src="Bilder/GeschichteEinerFrau/01.jpg" alt="Geschichte einer Frau 1" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/1.jpg" alt="Geschichte einer Frau 2" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/2.jpg" alt="Geschichte einer Frau 3" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/3.jpg" alt="Geschichte einer Frau 4" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/4.jpg" alt="Geschichte einer Frau 5" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/5.jpg" alt="Geschichte einer Frau 6" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/6.jpg" alt="Geschichte einer Frau 7" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/7.jpg" alt="Geschichte einer Frau 8" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/8.jpg" alt="Geschichte einer Frau 9" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/9.jpg" alt="Geschichte einer Frau 10" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/10.jpg" alt="Geschichte einer Frau 11" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/11.jpg" alt="Geschichte einer Frau 12" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/12.jpg" alt="Geschichte einer Frau 13" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/13.jpg" alt="Geschichte einer Frau 14" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/14.jpg" alt="Geschichte einer Frau 15" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/15.jpg" alt="Geschichte einer Frau 16" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/16.jpg" alt="Geschichte einer Frau 17" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/17.jpg" alt="Geschichte einer Frau 18" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/18.jpg" alt="Geschichte einer Frau 19" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/19.jpg" alt="Geschichte einer Frau 20" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/20.jpg" alt="Geschichte einer Frau 21" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/21.jpg" alt="Geschichte einer Frau 22" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/22.jpg" alt="Geschichte einer Frau 23" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/23.jpg" alt="Geschichte einer Frau 24" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/24.jpg" alt="Geschichte einer Frau 25" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/25.jpg" alt="Geschichte einer Frau 26" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/26.jpg" alt="Geschichte einer Frau 27" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/27.jpg" alt="Geschichte einer Frau 28" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/28.jpg" alt="Geschichte einer Frau 29" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/29.jpg" alt="Geschichte einer Frau 30" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/30.jpg" alt="Geschichte einer Frau 31" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/31.jpg" alt="Geschichte einer Frau 32" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/32.jpg" alt="Geschichte einer Frau 33" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/33.jpg" alt="Geschichte einer Frau 34" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/34.jpg" alt="Geschichte einer Frau 35" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/35.jpg" alt="Geschichte einer Frau 36" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/36.jpg" alt="Geschichte einer Frau 37" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/37.jpg" alt="Geschichte einer Frau 38" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/38.jpg" alt="Geschichte einer Frau 39" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/39.jpg" alt="Geschichte einer Frau 40" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/40.jpg" alt="Geschichte einer Frau 41" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/41.jpg" alt="Geschichte einer Frau 42" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/42.jpg" alt="Geschichte einer Frau 43" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/43.jpg" alt="Geschichte einer Frau 44" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/44.jpg" alt="Geschichte einer Frau 45" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/45.jpg" alt="Geschichte einer Frau 46" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/46.jpg" alt="Geschichte einer Frau 47" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/47.jpg" alt="Geschichte einer Frau 48" loading="lazy">
+                <img src="Bilder/GeschichteEinerFrau/48.jpg" alt="Geschichte einer Frau 49" loading="lazy">
+            </div>
+        </section>
+
+        <!-- VIDEO GALERIE: Künstler -->
+        <section class="section reveal" aria-labelledby="btnVideoGallery" id="section-kuenstler">
+            <button class="vg-button" id="btnVideoGallery" aria-expanded="false" aria-controls="vgVideos" data-gallery="vgVideos">
+                🎥 Videogalerie · Antje, hey – du malst uns die Welt <span class="gallery-count">(20)</span>
+            </button>
+            <div id="vgVideos" class="short-video-grid hidden-gallery" role="region" aria-label="Künstler Videogalerie">
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Albrecht Dürer">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Albrecht_Duerer.mp4" type="video/mp4"></video>
+                    <div class="short-label">Albrecht Dürer</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Andy Warhol">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Andy_Warhol.mp4" type="video/mp4"></video>
+                    <div class="short-label">Andy Warhol</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Artemisia Gentileschi">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Artemisia_Gentileschi.mp4" type="video/mp4"></video>
+                    <div class="short-label">Artemisia Gentileschi</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Claude Monet">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Claude_Monet.mp4" type="video/mp4"></video>
+                    <div class="short-label">Claude Monet</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Edvard Munch">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Edvard_Munch.mp4" type="video/mp4"></video>
+                    <div class="short-label">Edvard Munch</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Egon Schiele">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Egon_Schiele.mp4" type="video/mp4"></video>
+                    <div class="short-label">Egon Schiele</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Frida Kahlo">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Frida_Kahlo.mp4" type="video/mp4"></video>
+                    <div class="short-label">Frida Kahlo</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Gustav Klimt">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Gustav Klimt.mp4" type="video/mp4"></video>
+                    <div class="short-label">Gustav Klimt</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Henri Matisse">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Henri_Matisse.mp4" type="video/mp4"></video>
+                    <div class="short-label">Henri Matisse</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Käthe Kollwitz">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/K%C3%A4the_Kollwitz.mp4" type="video/mp4"></video>
+                    <div class="short-label">Käthe Kollwitz</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Leonardo da Vinci">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Leonardo_da_Vinci.mp4" type="video/mp4"></video>
+                    <div class="short-label">Leonardo da Vinci</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Lucian Freud">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Lucian_Freud.mp4" type="video/mp4"></video>
+                    <div class="short-label">Lucian Freud</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Marc Chagall">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Marc_Chagall.mp4" type="video/mp4"></video>
+                    <div class="short-label">Marc Chagall</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Max Beckmann">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Max_Beckmann.mp4" type="video/mp4"></video>
+                    <div class="short-label">Max Beckmann</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Pablo Picasso">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Pablo_Picasso.mp4" type="video/mp4"></video>
+                    <div class="short-label">Pablo Picasso</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Rembrandt van Rijn">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Rembrandt_van_Rijn.mp4" type="video/mp4"></video>
+                    <div class="short-label">Rembrandt van Rijn</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Salvador Dalí">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Salvador_Dal%C3%AD.mp4" type="video/mp4"></video>
+                    <div class="short-label">Salvador Dalí</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Tamara de Lempicka">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Tamara_de_Lempicka.mp4" type="video/mp4"></video>
+                    <div class="short-label">Tamara de Lempicka</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Vincent van Gogh">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Vincent_van_Gogh.mp4" type="video/mp4"></video>
+                    <div class="short-label">Vincent van Gogh</div>
+                </div>
+                <div class="short-video-card" tabindex="0" role="button" aria-label="Video öffnen: Paula Modersohn-Becker">
+                    <video preload="metadata" muted playsinline><source src="VideosSmall/Paula_Modersohn-Becker.mp4" type="video/mp4"></video>
+                    <div class="short-label">Paula Modersohn-Becker</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            🌻 Antje – Eine Reise durch Farbe und Licht · „Die Kunst ist der Spiegel der Seele" <span class="footer-sunflower" id="retriggerConfetti" title="Klick für Konfetti! 🎉">🌻</span>
+        </footer>
+    </div>
+
+    <!-- MODAL -->
+    <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-label="Bild oder Video vergrößern">
+        <button class="close-modal" aria-label="Schließen">&times;</button>
+        <button class="modal-nav modal-prev" id="modalPrevBtn" aria-label="Vorheriges">&#9664;</button>
+        <button class="modal-nav modal-next" id="modalNextBtn" aria-label="Nächstes">&#9654;</button>
+        <img class="modal-content" id="modalImg" alt="Vergrößertes Bild">
+        <video class="modal-content modal-video" id="modalVideo" controls playsinline></video>
+        <div class="modal-counter" id="modalCounter"></div>
+    </div>
+
+    <script>
+        const CONFIG = { debug: false, smoothScroll: true, animationDelay: 100 };
+        const log = CONFIG.debug ? console.log : () => {};
+
+        // ==================== STARDUST CANVAS ====================
+        const canvas = document.getElementById('stardustCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let canvasW, canvasH;
+        let particleCount = window.innerWidth < 768 ? 40 : 80;
+
+        function resizeCanvas() {
+            canvasW = canvas.width = window.innerWidth;
+            canvasH = canvas.height = window.innerHeight;
+            particleCount = window.innerWidth < 768 ? 40 : 80;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            // Adjust particle array size
+            while (particles.length < particleCount) {
+                particles.push(new StarParticle());
+            }
+            while (particles.length > particleCount) {
+                particles.pop();
+            }
+        });
+
+        class StarParticle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvasH;
+            }
+            reset() {
+                this.x = Math.random() * canvasW;
+                this.y = -10;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedY = Math.random() * 0.3 + 0.1;
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.wobbleSpeed = Math.random() * 0.005 + 0.002;
+                this.wobbleOffset = Math.random() * Math.PI * 2;
+                this.color = Math.random() < 0.6 ?
+                    `hsla(${40 + Math.random()*20}, ${70 + Math.random()*30}%, ${60 + Math.random()*20}%,` :
+                    `hsla(${25 + Math.random()*15}, ${50 + Math.random()*30}%, ${55 + Math.random()*25}%,`;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * this.wobbleSpeed + this.wobbleOffset) * 0.1;
+                if (this.y > canvasH + 10) { this.reset(); this.y = -10; }
+                if (this.x < -10) this.x = canvasW + 10;
+                if (this.x > canvasW + 10) this.x = -10;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.opacity + ')';
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + (this.opacity * 0.15) + ')';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new StarParticle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvasW, canvasH);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // ==================== SCROLL PROGRESS + BACK TO TOP ====================
+        const scrollProgress = document.getElementById('scrollProgress');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            scrollProgress.style.width = scrollPercent + '%';
+
+            if (scrollTop > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }, { passive: true });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ==================== STICKY NAV ACTIVE SECTION ====================
+        const navLinks = document.querySelectorAll('.sticky-nav a[data-nav]');
+        const sectionIds = Array.from(navLinks).map(a => document.getElementById('section-' + a.dataset.nav)).filter(Boolean);
+
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id.replace('section-', '');
+                    navLinks.forEach(a => {
+                        a.classList.toggle('active', a.dataset.nav === id);
+                    });
+                }
+            });
+        }, { threshold: 0.3, rootMargin: '-60px 0px -40% 0px' });
+
+        sectionIds.forEach(section => navObserver.observe(section));
+
+        // Smooth scroll for nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.getElementById('section-' + link.dataset.nav);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ==================== CURSOR SPARKLE TRAIL ====================
+        const cursorSparkle = document.getElementById('cursorSparkle');
+        let sparkleTimeout;
+        document.addEventListener('mousemove', function(e) {
+            cursorSparkle.style.left = e.clientX + 'px';
+            cursorSparkle.style.top = e.clientY + 'px';
+            cursorSparkle.classList.add('active');
+            clearTimeout(sparkleTimeout);
+            sparkleTimeout = setTimeout(() => {
+                cursorSparkle.classList.remove('active');
+            }, 150);
+        });
+
+        // ==================== CONFETTI ====================
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#f7d44a', '#daa520', '#b85c1a', '#d49b3a', '#4a6741', '#6b8e5a', '#e8dcc8', '#faf3e0', '#b97f3a', '#ffdd57'];
+            const shapes = ['🌻', '✨', '🎨', '🖌️', '⭐', '💛'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    piece.style.left = Math.random() * 100 + '%';
+                    piece.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    piece.style.animationDelay = (Math.random() * 0.8) + 's';
+                    piece.style.fontSize = (Math.random() * 20 + 14) + 'px';
+                    if (Math.random() < 0.4) {
+                        piece.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    } else {
+                        piece.style.width = (Math.random() * 12 + 6) + 'px';
+                        piece.style.height = (Math.random() * 12 + 6) + 'px';
+                        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    }
+                    container.appendChild(piece);
+                    setTimeout(() => {
+                        if (piece.parentNode) piece.parentNode.removeChild(piece);
+                    }, 5000);
+                }, i * 25);
+            }
+        }
+        setTimeout(launchConfetti, 600);
+
+        // Retrigger confetti on footer sunflower click
+        document.getElementById('retriggerConfetti').addEventListener('click', launchConfetti);
+
+        // ==================== SCROLL REVEAL ====================
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const galleryImages = entry.target.querySelectorAll('.gallery-grid img:not(.reveal-img-processed)');
+                    const videoCards = entry.target.querySelectorAll('.short-video-card:not(.reveal-vid-processed)');
+
+                    galleryImages.forEach((img, i) => {
+                        img.classList.add('reveal-img', 'reveal-img-processed');
+                        img.style.transitionDelay = (i * 0.04) + 's';
+                        requestAnimationFrame(() => img.classList.add('visible-img'));
+                    });
+                    videoCards.forEach((card, i) => {
+                        card.classList.add('reveal-vid', 'reveal-vid-processed');
+                        card.style.transitionDelay = (i * 0.05) + 's';
+                        requestAnimationFrame(() => card.classList.add('visible-vid'));
+                    });
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.section.reveal, .audio-vg-item.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // ==================== BUTTON RIPPLE EFFECT ====================
+        document.querySelectorAll('.vg-button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const rect = btn.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                btn.appendChild(ripple);
+                setTimeout(() => {
+                    if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
+                }, 700);
+            });
+        });
+
+        // ==================== GALLERY TOGGLE ====================
+        function toggleGallery(galleryId, button) {
+            const gallery = document.getElementById(galleryId);
+            if (!gallery) return;
+            const isHidden = gallery.classList.contains('hidden-gallery');
+            if (isHidden) {
+                document.querySelectorAll('.gallery-grid, .short-video-grid').forEach(el => {
+                    if (el.id !== galleryId) {
+                        el.classList.add('hidden-gallery');
+                        const relatedBtn = document.querySelector(`[data-gallery="${el.id}"]`);
+                        if (relatedBtn) relatedBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+                gallery.classList.remove('hidden-gallery');
+                button.setAttribute('aria-expanded', 'true');
+                setTimeout(() => {
+                    const newImages = gallery.querySelectorAll('img:not(.reveal-img-processed)');
+                    const newCards = gallery.querySelectorAll('.short-video-card:not(.reveal-vid-processed)');
+                    newImages.forEach((img, i) => {
+                        img.classList.add('reveal-img', 'reveal-img-processed');
+                        img.style.transitionDelay = (i * 0.03) + 's';
+                        requestAnimationFrame(() => img.classList.add('visible-img'));
+                    });
+                    newCards.forEach((card, i) => {
+                        card.classList.add('reveal-vid', 'reveal-vid-processed');
+                        card.style.transitionDelay = (i * 0.04) + 's';
+                        requestAnimationFrame(() => card.classList.add('visible-vid'));
+                    });
+                }, 100);
+                if (CONFIG.smoothScroll) {
+                    setTimeout(() => gallery.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), CONFIG.animationDelay);
+                }
+            } else {
+                gallery.classList.add('hidden-gallery');
+                button.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        document.querySelectorAll('[data-gallery]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleGallery(btn.getAttribute('data-gallery'), btn);
+            });
+        });
+
+        // ==================== MODAL ====================
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalVideo = document.getElementById('modalVideo');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const prevBtn = document.getElementById('modalPrevBtn');
+        const nextBtn = document.getElementById('modalNextBtn');
+        const modalCounter = document.getElementById('modalCounter');
+        let lastFocusedElement = null;
+        let currentGalleryItems = [];
+        let currentItemIndex = -1;
+        const ITEM_TYPE = { IMG: 'img', VIDEO: 'video' };
+
+        function openModal(src, itemsArray, clickedIndex) {
+            lastFocusedElement = document.activeElement;
+            modalVideo.pause();
+            if (itemsArray && itemsArray.length > 0) {
+                currentGalleryItems = itemsArray;
+                currentItemIndex = clickedIndex >= 0 ? clickedIndex : itemsArray.findIndex(item => item.src === src);
+            } else {
+                currentGalleryItems = [];
+                currentItemIndex = -1;
+            }
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            backToTop.classList.remove('visible');
+            showCurrentItem();
+            updateNavButtons();
+            updateCounter();
+            setTimeout(() => closeModalBtn.focus(), 50);
+        }
+
+        function showCurrentItem() {
+            if (currentItemIndex < 0 || currentItemIndex >= currentGalleryItems.length) return;
+            const item = currentGalleryItems[currentItemIndex];
+            if (item.type === ITEM_TYPE.VIDEO) {
+                modalVideo.src = item.src;
+                modalVideo.style.display = 'block';
+                modalImg.style.display = 'none';
+                modalImg.src = '';
+                modalVideo.play().catch(() => {});
+            } else {
+                modalImg.src = item.src;
+                modalImg.style.display = 'block';
+                modalVideo.style.display = 'none';
+                modalVideo.pause();
+                modalVideo.src = '';
+            }
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            modalImg.src = '';
+            modalImg.style.display = 'block';
+            modalVideo.pause();
+            modalVideo.src = '';
+            modalVideo.style.display = 'none';
+            document.body.style.overflow = '';
+            currentGalleryItems = [];
+            currentItemIndex = -1;
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            }
+            if (lastFocusedElement) lastFocusedElement.focus();
+        }
+
+        function navigateItem(direction) {
+            if (currentGalleryItems.length === 0) return;
+            const newIndex = currentItemIndex + direction;
+            if (newIndex < 0) currentItemIndex = currentGalleryItems.length - 1;
+            else if (newIndex >= currentGalleryItems.length) currentItemIndex = 0;
+            else currentItemIndex = newIndex;
+            showCurrentItem();
+            updateNavButtons();
+            updateCounter();
+        }
+
+        function updateNavButtons() {
+            const hasNav = currentGalleryItems.length > 1;
+            prevBtn.style.display = hasNav ? 'flex' : 'none';
+            nextBtn.style.display = hasNav ? 'flex' : 'none';
+        }
+
+        function updateCounter() {
+            if (currentGalleryItems.length > 1) {
+                const currentItem = currentGalleryItems[currentItemIndex];
+                const prefix = currentItem && currentItem.type === ITEM_TYPE.VIDEO ? '🎬 ' : '🖼️ ';
+                modalCounter.textContent = `${prefix}${currentItemIndex + 1} / ${currentGalleryItems.length}`;
+                modalCounter.style.display = 'block';
+            } else {
+                modalCounter.style.display = 'none';
+            }
+        }
+
+        function bindImageClickToModal(containerElement) {
+            const images = containerElement.querySelectorAll('img');
+            const galleryItems = [];
+            images.forEach(img => galleryItems.push({ src: img.src, type: ITEM_TYPE.IMG }));
+            images.forEach((img, idx) => {
+                img.addEventListener('click', (e) => { e.stopPropagation(); openModal(img.src, galleryItems, idx); });
+                img.setAttribute('tabindex', '0');
+                img.setAttribute('role', 'button');
+                img.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(img.src, galleryItems, idx); }
+                });
+            });
+            const videoCards = containerElement.querySelectorAll('.short-video-card');
+            videoCards.forEach((card, idx) => {
+                const videoEl = card.querySelector('video');
+                if (!videoEl || !videoEl.querySelector('source')) return;
+                const src = videoEl.querySelector('source').src;
+                const videoItems = [];
+                containerElement.querySelectorAll('.short-video-card').forEach((c, i) => {
+                    const vSrc = c.querySelector('video source')?.src;
+                    if (vSrc) videoItems.push({ src: vSrc, type: ITEM_TYPE.VIDEO });
+                });
+                card.addEventListener('click', () => {
+                    const thisIdx = videoItems.findIndex(item => item.src === src);
+                    openModal(src, videoItems, thisIdx >= 0 ? thisIdx : 0);
+                });
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const thisIdx = videoItems.findIndex(item => item.src === src);
+                        openModal(src, videoItems, thisIdx >= 0 ? thisIdx : 0);
+                    }
+                });
+            });
+        }
+
+        document.querySelectorAll('.gallery-grid, .short-video-grid').forEach(el => bindImageClickToModal(el));
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => {
+            if (modal.style.display === 'flex') {
+                if (e.key === 'Escape') closeModal();
+                else if (e.key === 'ArrowLeft') navigateItem(-1);
+                else if (e.key === 'ArrowRight') navigateItem(1);
+            }
+        });
+        prevBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateItem(-1); });
+        nextBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateItem(1); });
+
+        let touchStartX = 0, touchEndX = 0;
+        modal.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        modal.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) { if (diff > 0) navigateItem(1); else navigateItem(-1); }
+        }, { passive: true });
+
+        if (!('loading' in HTMLImageElement.prototype)) {
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => { img.src = img.src; });
+        }
+
+        // ==================== LYRIC TOGGLE ====================
+        document.querySelectorAll('.lyric-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var lyricId = btn.getAttribute('data-lyric');
+                if (!lyricId) return;
+                var panel = document.getElementById('lyric-' + lyricId);
+                if (!panel) return;
+                var isOpen = panel.classList.contains('open');
+                if (isOpen) {
+                    panel.classList.remove('open');
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.textContent = '📝 Text anzeigen';
+                } else {
+                    document.querySelectorAll('.lyric-panel.open').forEach(function(p) {
+                        p.classList.remove('open');
+                        var relatedBtn = document.querySelector('.lyric-btn[data-lyric="' + p.id.replace('lyric-', '') + '"]');
+                        if (relatedBtn) { relatedBtn.setAttribute('aria-expanded', 'false'); relatedBtn.textContent = '📝 Text anzeigen'; }
+                    });
+                    panel.classList.add('open');
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.textContent = '📝 Text verbergen';
+                    setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+                }
+            });
+        });
+
+        console.log('%c🌻 Antje – Super Animated Edition v2 🌻', 'font-size: 24px; color: #daa520; font-weight: bold;');
+        console.log('%cReise durch Farbe und Licht', 'font-size: 14px; color: #b85c1a; font-style: italic;');
+        console.log('%c„Ich träume meine Malerei und dann male ich meinen Traum" – V. van Gogh', 'font-size: 12px; color: #8b6b4a;');
+        console.log('%c✨ Stardust · Sticky-Nav · Konfetti · Scroll-Progress · Back-to-Top ✨', 'font-size: 11px; color: #6a8ecf;');
+        log('Enhanced Van Gogh page v2 initialized.');
+
+        // ==================== EINZEL-MEDIA-WIEDERGABE ====================
+        (function() {
+            const allMedia = new Set();
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeName === 'VIDEO' || node.nodeName === 'AUDIO') {
+                            allMedia.add(node);
+                            node.addEventListener('play', onMediaPlay);
+                        }
+                        if (node.querySelectorAll) {
+                            node.querySelectorAll('video, audio').forEach(function(el) {
+                                allMedia.add(el);
+                                el.addEventListener('play', onMediaPlay);
+                            });
+                        }
+                    });
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+
+            document.querySelectorAll('video, audio').forEach(function(el) {
+                allMedia.add(el);
+                el.addEventListener('play', onMediaPlay);
+            });
+
+            function onMediaPlay(e) {
+                allMedia.forEach(function(media) {
+                    if (media !== e.target && !media.paused) {
+                        media.pause();
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <footer style="text-align:center; padding:20px 10px; background:var(--footer-bg); color:var(--footer-text); font-size:14px; border-top:3px solid var(--vg-gold); position:relative; z-index:2; transition: background 0.5s, color 0.5s;">
+        <p style="margin:5px 0;">&copy; 2026 Valeri Friedland</p>
+        <p style="margin:5px 0;">
+            <a href="mailto:valerifriedland@gmail.com" style="color:var(--vg-gold-lt); text-decoration:none;">valerifriedland@gmail.com</a>
+        </p>
+    </footer>
+</body>
+</html>
